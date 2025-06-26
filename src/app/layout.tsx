@@ -2,10 +2,11 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import React, { use } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,34 +53,42 @@ export default function RootLayout({
       >
         {/* Header global */}
         <header className="bg-[#795FFC] text-white py-2 sm:py-2 px-2 sm:px-4 xl:px-6 xl:py-4 flex justify-between items-center shadow-md fixed top-0 left-0 w-full z-50">
-          <img
-            src="assets/icons/logos.svg"
+          <Image
+            src="/assets/icons/logos.svg"
             alt="wakatti_logo"
+            width={48}
+            height={48}
             className="h-12 w-auto sm:h-15 xl:h-1/14"
           />
           <div className="flex items-center gap-2 sm:gap-4">
             <Link href="/messages" aria-label="Messages">
               <Button className="bg-[#997FFF] rounded-full w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 flex items-center justify-center shadow hover:bg-white/50">
-                <img
-                  src="assets/icons/message.svg"
+                <Image
+                  src="/assets/icons/message.svg"
                   alt="Messages"
+                  width={24}
+                  height={24}
                   className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
                 />
               </Button>
             </Link>
             <Link href="/notifications" aria-label="Notifications">
               <Button className="bg-[#997FFF] rounded-full w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 flex items-center justify-center shadow hover:bg-white/50">
-                <img
-                  src="assets/icons/notification.svg"
+                <Image
+                  src="/assets/icons/notification.svg"
                   alt="Notifications"
+                  width={24}
+                  height={24}
                   className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
                 />
               </Button>
             </Link>
             <Link href="/settings" aria-label="Settings">
-              <img
-                src="assets/icons/pers.svg"
+              <Image
+                src="/assets/icons/pers.svg"
                 alt="User profile"
+                width={56}
+                height={56}
                 className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 mr-2 sm:mr-4 lg:mr-10 ml-1 sm:ml-2"
               />
             </Link>
@@ -99,9 +108,11 @@ export default function RootLayout({
                 }`}
                 aria-label="dashboard"
               >
-                <img
-                  src="assets/icons/menu.svg"
+                <Image
+                  src="/assets/icons/menu.svg"
                   alt="Dashboard"
+                  width={24}
+                  height={24}
                   className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
                 />
               </Link>
@@ -114,9 +125,11 @@ export default function RootLayout({
                 }`}
                 aria-label="Employés"
               >
-                <img
-                  src="assets/icons/users.svg"
+                <Image
+                  src="/assets/icons/users.svg"
                   alt="Employés"
+                  width={24}
+                  height={24}
                   className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
                 />
               </Link>
@@ -129,9 +142,11 @@ export default function RootLayout({
                 }`}
                 aria-label="Présences"
               >
-                <img
-                  src="assets/icons/Icon.svg"
+                <Image
+                  src="/assets/icons/Icon.svg"
                   alt="#"
+                  width={24}
+                  height={24}
                   className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
                 />
               </Link>
@@ -144,9 +159,11 @@ export default function RootLayout({
                 }`}
                 aria-label="Notifications"
               >
-                <img
-                  src="assets/icons/notifications.svg"
+                <Image
+                  src="/assets/icons/notifications.svg"
                   alt="Notifications"
+                  width={24}
+                  height={24}
                   className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
                 />
               </Link>
@@ -172,9 +189,11 @@ export default function RootLayout({
                 }`}
                 aria-label="Settings"
               >
-                <img
-                  src="assets/icons/setting.svg"
+                <Image
+                  src="/assets/icons/setting.svg"
                   alt="Settings"
+                  width={24}
+                  height={24}
                   className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
                 />
               </Link>
