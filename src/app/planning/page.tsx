@@ -1,3 +1,13 @@
+/**
+ * PAGE DE PLANIFICATION - WAKATTI DASH
+ *
+ * Cette page affiche un calendrier hebdomadaire pour visualiser et gérer
+ * la planification des employés. Elle permet de :
+ * - Voir les tâches assignées par jour et par heure
+ * - Planifier des congés
+ * - Naviguer entre les semaines
+ * - Exporter les données de planification
+ */
 "use client";
 
 import { useState } from "react";
@@ -7,14 +17,21 @@ import { format } from "date-fns";
 import LeaveRequestModal from "@/components/congés";
 import Image from "next/image";
 
+/**
+ * Composant principal de la vue de planification
+ * Affiche un calendrier hebdomadaire avec les événements/tâches des employés
+ */
 export default function ScheduleView() {
+  // État pour la semaine sélectionnée (dates de début et fin)
   const [selectedWeek] = useState({
     start: new Date("2025-10-21"),
     end: new Date("2025-10-26"),
   });
 
+  // État pour l'ouverture/fermeture de la modal de demande de congé
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
 
+  // Configuration des jours de la semaine affichés dans le calendrier
   const days = [
     "Lundi 21",
     "Mardi 22",
@@ -24,16 +41,19 @@ export default function ScheduleView() {
     "Samedi 26",
     "Dimanche 27",
   ];
+
+  // Génération des heures de travail (9h à 20h)
   const hours = Array.from({ length: 12 }, (_, i) => i + 9);
 
-  // Remplace les icônes Lucide par des images SVG personnalisées
+  // Données des événements/tâches planifiés pour chaque employé
+  // Chaque événement contient : titre, employé, jour, horaire, couleur et avatar
   const events = [
     {
       title: "Nombre de tâches : 01",
       employee: "DOSSA",
       day: "Lundi 21",
       time: "09:30 - 11:30",
-      color: "bg-green-100 border-green-400",
+      color: "bg-green-100 border-green-400", // Couleur verte pour ce type de tâche
       avatars: [
         <Image
           src="/assets/images/2.png"
@@ -50,7 +70,7 @@ export default function ScheduleView() {
       employee: "DADA",
       day: "Mardi 22",
       time: "11:00 - 12:00",
-      color: "bg-orange-100 border-orange-400",
+      color: "bg-orange-100 border-orange-400", // Couleur orange pour nouveau employé
       avatars: [
         <Image
           src="/assets/images/1.png"
@@ -185,14 +205,19 @@ export default function ScheduleView() {
 
   return (
     <div className="p-20 bg-[#f4f0fc] min-h-screen">
+      {/* EN-TÊTE DE LA PAGE */}
       <div className="flex items-center justify-between mb-10">
         <div>
+          {/* Titre et description de la page */}
           <h2 className="text-2xl font-bold mb-4">Employées</h2>
           <p className="text-sm text-gray-500">
             Voici une liste de tous les employés.
           </p>
         </div>
+
+        {/* BOUTONS D'EXPORT ET D'ACTIONS */}
         <div className="flex gap-2">
+          {/* Boutons pour exporter les données dans différents formats */}
           <button className="bg-[#795FFC] text-white font-semibold py-2 px-6 rounded-lg shadow hover:bg-violet-700 transition">
             Copy
           </button>
@@ -208,7 +233,9 @@ export default function ScheduleView() {
           <button className="text-gray-600 font-semibold py-2 px-6 rounded-lg hover:bg-gray-200 transition">
             Print
           </button>
-        </div>{" "}
+        </div>
+
+        {/* BOUTON POUR PLANIFIER UN CONGÉ */}
         <Button
           onClick={() => setIsLeaveModalOpen(true)}
           className="bg-[#795FFC] text-white font-semibold py-3 px-6 rounded-lg shadow hover:bg-violet-700 transition"
@@ -217,35 +244,49 @@ export default function ScheduleView() {
         </Button>
       </div>
 
-      {/* Modal de congé */}
+      {/* MODAL DE DEMANDE DE CONGÉ */}
       <LeaveRequestModal
         isOpen={isLeaveModalOpen}
         onClose={() => setIsLeaveModalOpen(false)}
       />
+
+      {/* CONTENEUR PRINCIPAL DU CALENDRIER */}
       <div className="bg-white rounded-xl shadow-lg">
+        {/* BARRE DE NAVIGATION DU CALENDRIER */}
         <div className="flex items-center text-sm font-medium text-black justify-between mb-4 p-4">
+          {/* Bouton "Aujourd'hui" pour revenir à la date actuelle */}
           <button className="text-gray-600 font-semibold py-2 border-1 border-gray-200 px-6 rounded-full hover:bg-gray-200 transition">
             Aujourd&apos;hui
-          </button>{" "}
+          </button>
+
+          {/* NAVIGATION ENTRE LES SEMAINES */}
           <div className="flex items-center gap-2">
+            {/* Bouton précédent */}
             <Button
               variant="outline"
               className="w-12 h-12 rounded-full border-gray-200  flex items-center justify-center mr-4"
             >
               <ChevronLeft className="text-gray-500" />
             </Button>
+
+            {/* Affichage de la période sélectionnée */}
             <p className="font-semibold">
               {format(selectedWeek.start, "MMM dd")} –{" "}
               {format(selectedWeek.end, "dd ,yyyy")}
             </p>
+
+            {/* Bouton suivant */}
             <Button
               variant="outline"
               className="w-12 h-12 rounded-full border-gray-200  flex items-center justify-center ml-4"
             >
               <ChevronRight className="text-gray-500" />
             </Button>
-          </div>{" "}
+          </div>
+
+          {/* SÉLECTEUR DE VUE CALENDRIER */}
           <div className="bg-gray-100 p-0 rounded-full flex">
+            {/* Options de vue : Année, Semaine, Mois, Jours */}
             <Button
               variant="outline"
               className="bg-white text-gray-600 font-semibold p-4 rounded-l-full border-1 border-gray-200 hover:bg-gray-50 transition"
@@ -270,8 +311,12 @@ export default function ScheduleView() {
           </div>
         </div>
 
+        {/* GRILLE DU CALENDRIER */}
         <div className="grid grid-cols-8 gap-px bg-white rounded-lg overflow-hidden">
+          {/* En-tête vide pour l'alignement avec les heures */}
           <div className="bg-white p-2 text-xs font-semibold">&nbsp;</div>
+
+          {/* EN-TÊTES DES JOURS DE LA SEMAINE */}
           {days.map((day) => (
             <div
               key={day}
@@ -281,12 +326,17 @@ export default function ScheduleView() {
             </div>
           ))}
 
+          {/* LIGNES D'HEURES ET ÉVÉNEMENTS */}
           {hours.map((hour) => (
             <div key={hour} className="contents">
+              {/* COLONNE DES HEURES */}
               <div className="bg-white text-sm text-black p-8 border-t border-gray-200">
                 {hour.toString().padStart(2, "0")}:00
               </div>
+
+              {/* CELLULES POUR CHAQUE JOUR À CETTE HEURE */}
               {days.map((day) => {
+                // Recherche d'un événement pour ce jour et cette heure
                 const block = events.find(
                   (e) =>
                     e.day === day &&
@@ -297,16 +347,20 @@ export default function ScheduleView() {
                     key={`${day}-${hour}`}
                     className="relative h-24 border-t border-l bg-white border-gray-200"
                   >
+                    {/* AFFICHAGE DE L'ÉVÉNEMENT S'IL EXISTE */}
                     {block && (
                       <div
                         className={`absolute w-full h-full rounded-lg border ${block.color} p-2 text-xs overflow-hidden`}
                       >
+                        {/* Titre de l'événement (peut contenir des retours à la ligne) */}
                         <p className="font-semibold whitespace-pre-line">
                           {block.title}
                         </p>
+                        {/* Nom de l'employé assigné */}
                         <p className="text-gray-500 text-[11px]">
                           Employé : {block.employee}
                         </p>
+                        {/* Avatars des participants */}
                         <div className="flex mt-2 space-x-1 text-xl">
                           {block.avatars.map((avatar, i) => (
                             <span key={i}>{avatar}</span>

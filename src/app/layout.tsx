@@ -2,11 +2,13 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useNotifications } from "@/hooks/useNotifications";
+import NotificationContainer from "@/components/NotificationContainer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,6 +43,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
+  const { notifications, removeNotification, showConnectionNotification } =
+    useNotifications();
+
+  // Simuler la notification de connexion au chargement
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      showConnectionNotification();
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [showConnectionNotification]);
 
   return (
     <html lang="fr">
@@ -51,6 +64,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f4f2fb]`}
       >
+        {/* Conteneur de notifications */}
+        <NotificationContainer
+          notifications={notifications}
+          onRemoveNotification={removeNotification}
+        />
+
         {/* Header global */}
         <header className="bg-[#795FFC] text-white py-2 sm:py-2 px-2 sm:px-4 xl:px-6 xl:py-4 flex justify-between items-center shadow-md fixed top-0 left-0 w-full z-50">
           <Image

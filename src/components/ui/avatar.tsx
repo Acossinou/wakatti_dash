@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 export const Avatar = ({
   children,
@@ -19,7 +20,16 @@ export const Avatar = ({
 export const AvatarImage = ({
   src,
   alt,
+  width = 32,
+  height = 32,
   ...props
-}: React.ImgHTMLAttributes<HTMLImageElement>) => (
-  <img src={src} alt={alt} className="object-cover w-full h-full" {...props} />
+}: React.ComponentProps<typeof Image>) => (
+  <Image
+    src={src || ""}
+    alt={alt || ""}
+    width={width}
+    height={height}
+    className="object-cover w-full h-full"
+    {...props}
+  />
 );

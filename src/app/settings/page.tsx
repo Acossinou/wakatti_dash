@@ -235,6 +235,20 @@ const SettingPage = () => {
                   className="w-full bg-[#f3f6f9] text-[#795FFC] border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
                 />
               </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="streetAddress"
+                  className="block text-sm font-semibold text-gray-600 mb-2"
+                >
+                  Id de l&apos;entreprise 
+                </label>
+                <input
+                  type="text"
+                  id="streetAddress"
+                  placeholder="Street Id"
+                  className="w-full bg-[#f3f6f9] text-[#795FFC] border-none rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
               <div className="grid grid-cols-3 gap-6 mb-6">
                 <input
                   type="text"
