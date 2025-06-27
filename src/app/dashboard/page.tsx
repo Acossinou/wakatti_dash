@@ -11,6 +11,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -74,12 +75,13 @@ const COLORS = ["#2e90fa", "#22c55e", "#ef4444"];
  * Données des statistiques principales affichées en haut du dashboard
  * Chaque carte affiche une métrique importante avec son évolution
  */
-const STATS_DATA: StatCardProps[] = [
+const STATS_DATA: (StatCardProps & { href: string })[] = [
   {
     label: "Effectif Total",
     value: 158,
     trend: "4% (30jours)",
     trendColor: "neutral",
+    href: "/employees", // Redirection vers la page des employés
     icon: (
       <Image
         src="/assets/icons/1.svg"
@@ -95,6 +97,7 @@ const STATS_DATA: StatCardProps[] = [
     value: 124,
     trend: "4%(30jours)",
     trendColor: "neutral",
+    href: "/presences", // Redirection vers la page des présences
     icon: (
       <Image
         src="/assets/icons/2.svg"
@@ -110,6 +113,7 @@ const STATS_DATA: StatCardProps[] = [
     value: 65,
     trend: "25%(30jours)",
     trendColor: "neutral",
+    href: "/presences", // Redirection vers la page des présences
     icon: (
       <Image
         src="/assets/icons/3.svg"
@@ -125,6 +129,7 @@ const STATS_DATA: StatCardProps[] = [
     value: 300,
     trend: "15%(30jours)",
     trendColor: "neutral",
+    href: "/hours", // Redirection vers la page des heures
     icon: (
       <Image
         src="/assets/icons/4.svg"
@@ -192,10 +197,17 @@ const EMPLOYEES_DATA: Employee[] = [
 // COMPOSANTS
 
 /**
- * Composant pour afficher une carte de statistique
- * Affiche une métrique avec son icône, sa valeur et sa tendance
+ * Composant pour afficher une carte de statistique cliquable
+ * Affiche une métrique avec son icône, sa valeur et sa tendance, transformée en lien
  */
-const StatCard = ({ label, value, trend, trendColor, icon }: StatCardProps) => {
+const StatCard = ({
+  label,
+  value,
+  trend,
+  trendColor,
+  icon,
+  href,
+}: StatCardProps & { href: string }) => {
   // Configuration des couleurs selon le type de tendance
   const trendColors = {
     positive: "text-green-500",
@@ -212,33 +224,41 @@ const StatCard = ({ label, value, trend, trendColor, icon }: StatCardProps) => {
   };
 
   return (
-    <Card>
-      <CardContent className="px-2 sm:px-4 py-6 sm:py-8 lg:py-10 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center">
-        {/* Icône principale de la statistique */}
-        {icon && <span className="flex-shrink-0">{icon}</span>}
-        <div className="text-center sm:text-left">
-          {/* Valeur principale */}
-          <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-600">
-            {value}
+    <Link href={href} className="block">
+      <Card className="transition-all duration-200 bg-white rounded-xl hover:shadow-lg hover:scale-105 cursor-pointer group">
+        <CardContent className="px-2 sm:px-4 py-6 sm:py-8 lg:py-10 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center">
+          {/* Icône principale de la statistique */}
+          {icon && (
+            <span className="flex-shrink-0 group-hover:scale-110 transition-transform duration-200">
+              {icon}
+            </span>
+          )}
+          <div className="text-center sm:text-left">
+            {/* Valeur principale */}
+            <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-600 group-hover:text-[#795FFC] transition-colors duration-200">
+              {value}
+            </div>
+            {/* Libellé de la statistique */}
+            <div className="text-xs sm:text-sm text-gray-500 mt-1 group-hover:text-gray-700 transition-colors duration-200">
+              {label}
+            </div>
+            {/* Tendance avec icône */}
+            <div
+              className={`flex items-center justify-center sm:justify-start gap-2 text-xs mt-1 font-medium ${trendColors[trendColor]}`}
+            >
+              <Image
+                src={trendIcons[label] || "/assets/icons/trend-default.svg"}
+                alt="trend icon"
+                width={24}
+                height={24}
+                className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
+              />
+              {trend}
+            </div>
           </div>
-          {/* Libellé de la statistique */}
-          <div className="text-xs sm:text-sm text-gray-500 mt-1">{label}</div>
-          {/* Tendance avec icône */}
-          <div
-            className={`flex items-center justify-center sm:justify-start gap-2 text-xs mt-1 font-medium ${trendColors[trendColor]}`}
-          >
-            <Image
-              src={trendIcons[label] || "/assets/icons/trend-default.svg"}
-              alt="trend icon"
-              width={24}
-              height={24}
-              className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
-            />
-            {trend}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
 

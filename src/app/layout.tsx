@@ -200,6 +200,25 @@ export default function RootLayout({
                 </div>
               </Link>
               <Link
+                href="/hours"
+                className={`border-2 border-gray-200 rounded-full p-2 sm:p-3 lg:p-4 flex items-center justify-center transition ${
+                  pathname === "/hours"
+                     ? "bg-[#795FFC] text-white border-[#795FFC]"
+                    : "text-gray-700 hover:text-[#795FFC] hover:bg-[#f4f2fb] hover:border-[#795FFC]"
+                }`}
+                aria-label="Heures"
+              >
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12,6 12,12 16,14" />
+                </svg>
+              </Link>
+              <Link
                 href="/settings"
                 className={`border-2 border-gray-200 rounded-full p-2 sm:p-3 lg:p-4 flex items-center justify-center transition ${
                   pathname === "/settings"
