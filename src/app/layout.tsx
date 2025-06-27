@@ -117,7 +117,7 @@ export default function RootLayout({
         <div className="flex pt-[60px] sm:pt-[80px] min-h-screen">
           {/* Sidebar */}
           <aside className="w-16 sm:w-20 bg-white border-r border-gray-200 h-[calc(100vh-60px)] sm:h-[calc(100vh-80px)] fixed top-[60px] sm:top-[80px] xl:top-30 left-0 z-40 flex flex-col items-center py-4 sm:py-8">
-            <nav className="flex flex-col gap-4 sm:gap-6 lg:gap-8 w-full items-center">
+            <nav className="flex flex-col gap-4 sm:gap-4 lg:gap-6 w-full items-center">
               <Link
                 href="/dashboard"
                 className={`border-2 border-gray-200 rounded-full p-2 sm:p-3 lg:p-4 flex items-center justify-center transition ${
